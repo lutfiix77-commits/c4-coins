@@ -9,8 +9,16 @@ import re
 import emoji
 from datetime import datetime, timedelta
 
+# --- FUNGSI GLOBAL ---
+def slow_print(text, speed=0.02):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(speed)
+    print()
+
 def adbeast_script():
-    # --- LOGIC ASLI LU (TIDAK DIUBAH) ---
+    # --- LOGIC ASLI (TIDAK DIUBAH) ---
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     EX_PATH = os.path.join(BASE_DIR, '..', 'ex')
     FILE_PATH = os.path.join(EX_PATH, 'time.json')
@@ -40,15 +48,9 @@ def adbeast_script():
         data = setup_expired()
         remaining = get_remaining_time(data['expired'])
         if remaining is None:
-            print("\n\033[1;31m[!] SCRIPT EXPIRED! Please contact admin for access.\033[0m")
+            print("\n\033[1;31m[!] SCRIPT EXPIRED! Please contact admin.\033[0m")
             sys.exit()
-        print(f"\033[1;37m[#] \033[1;32mScript Expired in: \033[1;33m{remaining}")
         return data
-
-    def slow_print(text, speed=0.02):
-        for char in text:
-            sys.stdout.write(char); sys.stdout.flush(); time.sleep(speed)
-        print()
 
     def generate_ua():
         android_vers = random.randint(10, 14)
@@ -83,7 +85,17 @@ def adbeast_script():
     email = input("\033[1;37m[?] Enter your FaucetPay Email: \033[1;33m")
     ua = generate_ua()
     fp = "".join(random.choices("0123456789abcdef", k=8))
-    headers = {'User-Agent': ua, 'Accept': "application/json, text/plain, */*", 'Content-Type': "application/json", 'origin': "https://faucet.adbeast.xyz", 'referer': "https://faucet.adbeast.xyz/"}
+    headers = {
+    'User-Agent': ua,
+    'Accept': "application/json, text/plain, */*",
+    'Content-Type': "application/json",
+    'sec-ch-ua-platform': "\"Android\"",
+    'x-requested-with': "XMLHttpRequest", # WAJIB ADA
+    'sec-ch-ua': f"\"Chromium\";v=\"130\", \"Android WebView\";v=\"130\", \"Not?A_Brand\";v=\"99\"",
+    'origin': "https://faucet.adbeast.xyz",
+    'referer': "https://faucet.adbeast.xyz/",
+    'accept-language': "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"
+}
 
     login_url = "https://faucetapis.adbeast.xyz/api/auth/login"
     login_payload = {"identifier": email, "referredBy": "KV2EJO7O", "fingerprint": fp, "botMetadata": {"webdriver": False, "hasChrome": False, "languages": 2, "plugins": 0, "isTampermonkey": False, "isDebuggerOpen": False, "hardware": 8, "memory": 4, "touchPoints": 5}}
@@ -120,39 +132,37 @@ def adbeast_script():
                         else: slow_print("\033[1;31m[!] Emoji mapping failed.")
                         for i in range(10, 0, -1):
                             sys.stdout.write(f"\r\033[1;37m[#] Wait for next claim: \033[1;33m{i}s   "); sys.stdout.flush(); time.sleep(1)
-                    except Exception as e: time.sleep(5)
-            else: sys.exit()
-    except Exception: sys.exit()
+                    except Exception as e: 
+                        print(f"Error Loop: {e}")
+                        time.sleep(5)
+            else: 
+                print(f"Login Gagal: {res_json.get('message')}")
+                sys.exit()
+        else:
+            print(f"HTTP Error: {resp_login.status_code}")
+            sys.exit()
+    except Exception as e:
+        # INI BIAR KELUAR PESANNYA KALAU CRASH
+        print(f"\n\033[1;31m[!] CRASH DETECTED: {e}\033[0m")
+        sys.exit()
 
 def main():
-    # Clear layar biar bersih
     os.system('cls' if os.name == 'nt' else 'clear')
-    
-    # Header Diamond lo
     print("\033[1;34m" + "💎 " + "="*41 + " 💎")
     slow_print("\033[1;37m     🌟 \033[1;36mScript AutoMation Premium Members \033[1;37m🌟")
     slow_print("\033[1;37m      🛠️  \033[1;32mCreators : \033[1;33mC4-Coins Team \033[1;37m🛠️")
     print("\033[1;34m" + "💎 " + "="*41 + " 💎")
-    
-    # Bagian Menu dengan efek ngetik
     print("\n\033[1;37m    [ SELECT YOUR COMMAND ]")
     print("\033[1;34m  ─────────────────────────────")
-    slow_print("\033[1;32m  (01) \033[1;37mAdBeast Auto Claim")
-    slow_print("\033[1;30m  (02) \033[1;30mAjs Script [Locked]")
-    slow_print("\033[1;30m  (03) \033[1;30mSjs Script [Locked]")
+    slow_print("\033[1;32m  1. \033[1;37mAdBeast Auto Claim")
     print("\033[1;34m  ─────────────────────────────")
-    
-    # Prompt input yang keren
-    slow_print("\n\033[1;36m[?] Please input number \033[1;37m>>> ", speed=0.05)
-    choice = input("") # Input manual setelah slow_print prompt
-    
+    choice = input("\n\033[1;36m[?] Please input number \033[1;37m => ")
     if choice == '1':
         adbeast_script()
-    elif choice in ['2', '3']:
-        print("\n\033[1;31m[!] Error: This script is only for Gold Members.")
     else:
-        print("\n\033[1;31m[!] Invalid Option! Returning to base...")
+        print("\n\033[1;31m[!] Invalid Option!")
         time.sleep(2)
         main()
+
 if __name__ == "__main__":
     main()
