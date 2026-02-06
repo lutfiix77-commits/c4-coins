@@ -125,14 +125,34 @@ def adbeast_script():
     except Exception: sys.exit()
 
 def main():
-    print("--- C4-COINS PREMIUM MENU ---")
-    print("1. AdBeast Script")
-    print("-----------------------------")
-    choice = input("Select an option: ")
+    # Clear layar biar bersih
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    # Header Diamond lo
+    print("\033[1;34m" + "💎 " + "="*41 + " 💎")
+    slow_print("\033[1;37m     🌟 \033[1;36mScript AutoMation Premium Members \033[1;37m🌟")
+    slow_print("\033[1;37m      🛠️  \033[1;32mCreators : \033[1;33mC4-Coins Team \033[1;37m🛠️")
+    print("\033[1;34m" + "💎 " + "="*41 + " 💎")
+    
+    # Bagian Menu dengan efek ngetik
+    print("\n\033[1;37m    [ SELECT YOUR COMMAND ]")
+    print("\033[1;34m  ─────────────────────────────")
+    slow_print("\033[1;32m  (01) \033[1;37mAdBeast Auto Claim")
+    slow_print("\033[1;30m  (02) \033[1;30mAjs Script [Locked]")
+    slow_print("\033[1;30m  (03) \033[1;30mSjs Script [Locked]")
+    print("\033[1;34m  ─────────────────────────────")
+    
+    # Prompt input yang keren
+    slow_print("\n\033[1;36m[?] Please input number \033[1;37m>>> ", speed=0.05)
+    choice = input("") # Input manual setelah slow_print prompt
+    
     if choice == '1':
         adbeast_script()
+    elif choice in ['2', '3']:
+        print("\n\033[1;31m[!] Error: This script is only for Gold Members.")
     else:
-        print("Invalid option. This script is not available yet!")
-
+        print("\n\033[1;31m[!] Invalid Option! Returning to base...")
+        time.sleep(2)
+        main()
 if __name__ == "__main__":
     main()
