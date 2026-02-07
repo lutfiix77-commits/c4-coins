@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="c4-coins",
-    version="1.0.4",
+    version="1.0.5",
     author="C4-Coins Team",
     packages=find_packages(),
     # Hanya masukkan library yang BUKAN bawaan Python di sini
