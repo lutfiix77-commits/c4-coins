@@ -22,7 +22,7 @@ def main():
     
     print("\n\033[1;37m    [ SELECT YOUR COMMAND ]")
     print("\033[1;34m  ─────────────────────────────")
-    print("\033[1;32m  1. \033[1;37mAdBeast Auto Claim")
+    print("\033[1;32m  1. \033[1;37mAdBeast Auto Claim [ dev ran out of balance ]")
     print("\033[1;32m  2. \033[1;37mBitFaucet Auto Claim")
     print("\033[1;34m  ─────────────────────────────")
     print("\033[1;31m  0. \033[1;37mExit")
