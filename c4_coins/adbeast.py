@@ -55,7 +55,7 @@ def run():
     def generate_ua():
         android_vers = random.randint(10, 14)
         chrome_vers = f"{random.randint(110, 130)}.0.{random.randint(1000, 6000)}.{random.randint(10, 200)}"
-        device_models = ["SM-G960F", "Pixel 7", "M2012K11AG", "RMX3301", "POCO F3"]
+        device_models = ["SM-G960F", "Pixel 7", "M2012K11AG", "RMX3301", "POCO F3", "SM-S918B", "Pixel 8 Pro", "M2102K1G", "CPH2307", "iPhone15,3", "SM-A546B", "NE2213", "M2007J3SG", "RMX3081", "SM-G991B", "Pixel 6a", "V2218", "XT2125-4", "SM-F946B", "M2101K6G", "SM-G973F", "Pixel 7 Pro", "M2011K2G", "RMX3363", "M2102J20SG", "SM-N986B", "Pixel 5", "M2101K9AG", "CPH2211", "iPhone14,5", "SM-M526BR", "LE2113", "M2002J9G", "RMX2170", "SM-G998B", "Pixel 4a", "V2105", "XT2143-1", "SM-G781B", "M2101K7BNY", "SM-A715F", "Pixel 6", "M2007J17G", "RMX3511", "CPH2025", "SM-A325F", "Pixel 3 XL", "V2025", "SM-G950F", "M2012K11C"]
         return f"Mozilla/5.0 (Linux; Android {android_vers}; {random.choice(device_models)}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome_vers} Mobile Safari/537.36"
 
     def solve_captcha(json_data):
