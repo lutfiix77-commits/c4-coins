@@ -15,7 +15,8 @@ def slow_print(text):
         time.sleep(0.03)
     print()
 
-def main():
+def run():
+    # --- ORIGINAL LOGIC START ---
     api_id = 28752231
     api_hash = 'ec1c1f2c30e2f1855c3edee7e348480b'
     
@@ -60,7 +61,7 @@ def main():
     head = login_headers.copy()
     head["authorization"] = f"Bearer {token}"
 
-    prin = requests.post("https://api.bitfaucet.net/api/auth/link-faucetpay", json={"address": email}, headers=head)
+    requests.post("https://api.bitfaucet.net/api/auth/link-faucetpay", json={"address": email}, headers=head)
 
     coins = requests.get("https://api.bitfaucet.net/api/faucet/coins", headers=head).json()
 
@@ -129,6 +130,7 @@ def main():
                     print(f"\r\033[1;37m[*] Wait for Next Claim In \033[1;33m{i} \033[1;37mseconds...  ", end="")
                     time.sleep(1)
                 print("\r" + " " * 50 + "\r", end="")
+    # --- ORIGINAL LOGIC END ---
 
 if __name__ == "__main__":
-    main()
+    run()
