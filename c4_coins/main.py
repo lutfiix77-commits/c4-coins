@@ -29,12 +29,49 @@ def main():
     
     choice = input("\n\033[1;36m[?] Please input number \033[1;37m => ")
 
+    # Pakai nama murni tanpa titik dulu buat mapping
     menu_map = {
-        '1': '.adbeast',
-        '2': '.bitfaucet'
+        '1': 'adbeast',
+        '2': 'bitfaucet'
     }
 
     if choice == '0':
+        print("\n\033[1;32m[!] Thank you for using our services. Goodbye!\033[0m")
+        sys.exit()
+
+    if choice in menu_map:
+        try:
+            module_name = menu_map[choice]
+            
+            # Logika Adaptif: Cek kalau jalan sebagai package (pip) atau file lokal
+            if __package__:
+                # Kalau dari pip, wajib pakai titik di depan
+                script = importlib.import_module(f".{module_name}", package=__package__)
+            else:
+                # Kalau jalan manual 'python main.py'
+                script = importlib.import_module(module_name)
+            
+            script.run()
+            
+        except ImportError as e:
+            print(f"\n\033[1;31m[!] Error: {module_name} not found! ({e})\033[0m")
+            time.sleep(2)
+            main()
+        except Exception as e:
+            print(f"\n\033[1;31m[!] Unexpected Error: {e}\033[0m")
+            time.sleep(3)
+            main()
+    else:
+        print("\n\033[1;31m[!] Invalid Option!")
+        time.sleep(2)
+        main()
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\n\033[1;31m[!] Operation cancelled by user.\033[0m")
+        sys.exit()    if choice == '0':
         print("\n\033[1;32m[!] Thank you for using our services. Goodbye!\033[0m")
         sys.exit()
 
