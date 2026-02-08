@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import importlib
+import asyncio
 
 def slow_print(text, speed=0.02):
     for char in text:
@@ -22,14 +23,12 @@ def main():
     
     print("\n\033[1;37m    [ SELECT YOUR COMMAND ]")
     print("\033[1;34m  ─────────────────────────────")
-    print("\033[1;32m  1. \033[1;37mAdBeast Auto Claim [ dev ran out of balance ]")
-    print("\033[1;32m  2. \033[1;37mBitFaucet Auto Claim")
+    print("\033[1;32m  1. \033[1;37mAdBeast Auto Claim [ insufficient dev balance ]")
+    print("\033[1;32m  2. \033[1;37mBitFaucet Auto Claim + Auto Bypass Shrtlink")
     print("\033[1;34m  ─────────────────────────────")
     print("\033[1;31m  0. \033[1;37mExit")
     
     choice = input("\n\033[1;36m[?] Please input number \033[1;37m => ")
-
-    # Pakai nama murni tanpa titik dulu buat mapping
     menu_map = {
         '1': 'adbeast',
         '2': 'bitfaucet'
@@ -42,17 +41,14 @@ def main():
     if choice in menu_map:
         try:
             module_name = menu_map[choice]
-            
-            # Logika Adaptif: Cek kalau jalan sebagai package (pip) atau file lokal
             if __package__:
-                # Kalau dari pip, wajib pakai titik di depan
                 script = importlib.import_module(f".{module_name}", package=__package__)
             else:
-                # Kalau jalan manual 'python main.py'
                 script = importlib.import_module(module_name)
-            
-            script.run()
-            
+            if asyncio.iscoroutinefunction(script.run):
+                asyncio.run(script.run())
+            else:
+                script.run()
         except ImportError as e:
             print(f"\n\033[1;31m[!] Error: {module_name} not found! ({e})\033[0m")
             time.sleep(2)
