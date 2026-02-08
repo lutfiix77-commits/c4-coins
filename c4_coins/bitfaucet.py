@@ -246,9 +246,11 @@ async def run():
             else:
                 time.sleep(5)
 
+# BAGIAN INI YANG DIPASTIKAN BISA JALAN ASYNC
 if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
     try:
-        asyncio.run(run())
+        loop.run_until_complete(run())
     except KeyboardInterrupt:
         print("\n\033[1;31m🛑 Stopped by user.")
         print("\033[1;34m" + "="*41)
